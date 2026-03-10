@@ -5,24 +5,24 @@
 </head>
 <body>
 
-<h2>Caesar Cipher Encrypt & Decrypt</h2>
+<h2>Caesar Cipher</h2>
 
-<form method="POST" action="/caesar">
+<form action="/caesar/process" method="POST">
     @csrf
 
-    <label>Text:</label><br>
-    <input type="text" name="text" value="{{ $text ?? '' }}" required><br><br>
+    <label>Plaintext</label><br>
+    <input type="text" name="text"><br><br>
 
-    <label>Shift:</label><br>
-    <input type="number" name="shift" value="{{ $shift ?? '' }}" required><br><br>
+    <label>Shift</label><br>
+    <input type="number" name="shift"><br><br>
 
-    <button type="submit" name="action" value="encrypt">Encrypt</button>
-    <button type="submit" name="action" value="decrypt">Decrypt</button>
+    <button type="submit">Encrypt</button>
+
 </form>
 
-@if(isset($result))
-    <h3>Hasil:</h3>
-    <p>{{ $result }}</p>
+@if(isset($ciphertext))
+    <h3>Hasil Ciphertext:</h3>
+    <p>{{ $ciphertext }}</p>
 @endif
 
 </body>
