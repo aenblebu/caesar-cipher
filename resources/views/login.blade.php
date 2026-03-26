@@ -56,7 +56,7 @@ margin-left:5px;
 color:#eee;
 }
 
-/* INPUT (INI YANG DIPERBAGUS 🔥) */
+
 .input-group input{
 width:100%;
 padding:12px 15px;
@@ -71,14 +71,14 @@ backdrop-filter:blur(5px);
 transition:all 0.3s ease;
 }
 
-/* FOCUS EFFECT */
+
 .input-group input:focus{
 border:1px solid #ff7eb3;
 background:rgba(255,255,255,0.2);
 box-shadow:0 0 10px rgba(255,126,179,0.6);
 }
 
-/* PLACEHOLDER */
+
 .input-group input::placeholder{
 color:#ddd;
 opacity:0.8;
