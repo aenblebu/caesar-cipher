@@ -9,6 +9,7 @@ class Cipher extends Model
     protected $fillable = [
         'plaintext',
         'ciphertext',
-        'shift'
+        'shift',
+        'action'
     ];
 }

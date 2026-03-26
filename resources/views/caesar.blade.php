@@ -1,28 +1,28 @@
-<!DOCTYPE html>
 <html>
 <head>
     <title>Caesar Cipher</title>
 </head>
 <body>
 
-<h2>Caesar Cipher</h2>
+<h2>Caesar Cipher Enkripsi & Dekripsi</h2>
 
-<form action="/caesar/process" method="POST">
+<form method="POST" action="/caesar/process">
     @csrf
 
-    <label>Plaintext</label><br>
-    <input type="text" name="text"><br><br>
+    <label>Text:</label><br>
+    <input type="text" name="text" value="{{ $plaintext ?? '' }}" required><br><br>
 
-    <label>Shift</label><br>
-    <input type="number" name="shift"><br><br>
+    <label>Shift:</label><br>
+    <input type="number" name="shift" value="{{ $shift ?? '' }}" required><br><br>
 
-    <button type="submit">Encrypt</button>
+    <button type="submit" name="action" value="encrypt">Enkripsi</button>
+    <button type="submit" name="action" value="decrypt">Dekripsi</button>
 
 </form>
 
 @if(isset($ciphertext))
-    <h3>Hasil Ciphertext:</h3>
-    <p>{{ $ciphertext }}</p>
+<h3>Hasil:</h3>
+<p>{{ $ciphertext }}</p>
 @endif
 
 </body>

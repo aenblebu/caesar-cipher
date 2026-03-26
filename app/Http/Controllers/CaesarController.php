@@ -16,27 +16,36 @@ class CaesarController extends Controller
     {
         $text = $request->text;
         $shift = $request->shift;
+        $action = $request->action;
+
+        if ($action == "decrypt") {
+            $shift = -$shift;
+        }
 
         $result = '';
 
         for ($i = 0; $i < strlen($text); $i++) {
+
             $char = $text[$i];
 
             if (ctype_alpha($char)) {
+
                 $ascii = ord($char);
                 $base = ctype_upper($char) ? 65 : 97;
 
-                $result .= chr(($ascii - $base + $shift) % 26 + $base);
+                $result .= chr(($ascii - $base + $shift + 26) % 26 + $base);
+
             } else {
                 $result .= $char;
             }
         }
 
-        // simpan ke database
+        // SIMPAN KE DATABASE
         Cipher::create([
             'plaintext' => $text,
             'ciphertext' => $result,
-            'shift' => $shift
+            'shift' => $request->shift,
+            'action' => $action
         ]);
 
         return view('caesar', [
