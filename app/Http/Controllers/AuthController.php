@@ -3,28 +3,41 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-
-    // login
-    public function login()
-    {
+    public function login() {
         return view('login');
     }
 
-    // proses login
-    public function prosesLogin(Request $request)
-    {
-        $username = $request->username;
+    public function prosesLogin(Request $request) {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required'
+        ]);
 
-        return redirect('/dashboard')->with('username', $username);
+        $user = User::where('email', $request->email)->first();
+
+        if ($user && Hash::check($request->password, $user->password)) {
+            session([
+                'login' => true,
+                'email' => $user->email,
+                'user_id' => $user->id
+            ]);
+            return redirect('/dashboard');
+        }
+
+        return back()->with('error', 'Email atau password salah');
     }
 
-    // halaman dashboard
-    public function dashboard()
-    {
-        return view('dashboard');
+    public function dashboard() {
+        return session('login') ? view('dashboard') : redirect('/login');
     }
 
+    public function logout() {
+        session()->flush();
+        return redirect('/login');
+    }
 }

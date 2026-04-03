@@ -48,7 +48,7 @@ margin-bottom:30px;
 font-size:28px;
 }
 
-.login{
+.logout{
 text-decoration:none;
 padding:8px 20px;
 border-radius:20px;
@@ -105,13 +105,33 @@ opacity:0.8;
 <div class="dashboard">
 
 <div class="header">
-<h1>Dashboard Ustadzah Anditha</h1>
-<a href="/login" class="login">Backburner</a>
+<h1>Dashboard Ustadzah ANDITHA </h1>
+
+{{-- tombol logout --}}
+<a href="/logout" class="logout">Backburner </a>
 </div>
+
+{{-- info user --}}
+<p style="margin-bottom:20px;">
+    Login sebagai: <b>{{ session('email') }}</b>
+</p>
 
 <div class="cards">
 
+<div class="card">
+<h2> 1</h2>
+<p>Cantik </p>
+</div>
 
+<div class="card">
+<h2> 2</h2>
+<p>Imup </p>
+</div>
+
+<div class="card">
+<h2> 3</h2>
+<p>Baik Hati </p>
+</div>
 
 </div>
 

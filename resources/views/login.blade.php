@@ -49,13 +49,11 @@ margin-bottom:20px;
 text-align:left;
 }
 
-/* LABEL */
 .input-group label{
 font-size:13px;
 margin-left:5px;
 color:#eee;
 }
-
 
 .input-group input{
 width:100%;
@@ -71,13 +69,11 @@ backdrop-filter:blur(5px);
 transition:all 0.3s ease;
 }
 
-
 .input-group input:focus{
 border:1px solid #ff7eb3;
 background:rgba(255,255,255,0.2);
 box-shadow:0 0 10px rgba(255,126,179,0.6);
 }
-
 
 .input-group input::placeholder{
 color:#ddd;
@@ -106,6 +102,15 @@ margin-top:15px;
 font-size:12px;
 opacity:0.8;
 }
+
+/* ERROR MESSAGE */
+.error{
+background: rgba(255,0,0,0.2);
+padding:10px;
+border-radius:10px;
+margin-bottom:15px;
+font-size:13px;
+}
 </style>
 
 </head>
@@ -115,17 +120,24 @@ opacity:0.8;
 
 <h2>Login</h2>
 
+{{-- ERROR MESSAGE --}}
+@if(session('error'))
+    <div class="error">
+        {{ session('error') }}
+    </div>
+@endif
+
 <form action="/login" method="POST">
     @csrf
 
     <div class="input-group">
-        <label>Username</label>
-        <input type="text" name="username" placeholder="Masukkan username">
+        <label>Email</label>
+        <input type="email" name="email" placeholder="Masukkan email" required>
     </div>
 
     <div class="input-group">
         <label>Password</label>
-        <input type="password" name="password" placeholder="Masukkan password">
+        <input type="password" name="password" placeholder="Masukkan password" required>
     </div>
 
     <button type="submit">Login</button>
