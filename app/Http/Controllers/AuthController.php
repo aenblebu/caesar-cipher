@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\User;
-use Illuminate\Support\Facades\Hash;
+use App\Models\pengguna;
+use Illuminate\Support\Facades\DB;
 
 class AuthController extends Controller
 {
@@ -12,28 +12,32 @@ class AuthController extends Controller
         return view('login');
     }
 
-    public function prosesLogin(Request $request) {
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required'
-        ]);
+    public function prosesLogin(Request $request)
+    {
+        $email = $request->email;
+        $password = $request->password;
 
-        $user = User::where('email', $request->email)->first();
+        $user = DB::table('pengguna')
+            ->where('email', $email)
+            ->where('password', $password)
+            ->first();
 
-        if ($user && Hash::check($request->password, $user->password)) {
-            session([
-                'login' => true,
-                'email' => $user->email,
-                'user_id' => $user->id
-            ]);
-            return redirect('/dashboard');
+        if ($user) {
+            session(['login' => true]);
+            return redirect('/daftar_pengguna');
+        } else {
+            return redirect('/login')->with('error', 'Email atau password salah');
         }
+    }
 
-        return back()->with('error', 'Email atau password salah');
+    public function daftarPengguna()
+    {
+        $users = DB::table('pengguna')->get();
+        return view('daftar_pengguna', compact('users'));
     }
 
     public function dashboard() {
-        return session('login') ? view('dashboard') : redirect('/login');
+        return session('login') ? view('daftar_pengguna') : redirect('/login');
     }
 
     public function logout() {
