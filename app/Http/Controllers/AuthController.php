@@ -32,12 +32,12 @@ class AuthController extends Controller
 
     public function daftarPengguna()
     {
-        $users = DB::table('pengguna')->get();
+        $users = pengguna::all();
         return view('daftar_pengguna', compact('users'));
     }
 
     public function dashboard() {
-        return session('login') ? view('daftar_pengguna') : redirect('/login');
+        return session('login') ? view('dashboard') : redirect('/login');
     }
 
     public function logout() {

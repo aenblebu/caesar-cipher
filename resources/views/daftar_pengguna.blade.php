@@ -9,17 +9,17 @@
 margin:0;
 padding:0;
 box-sizing:border-box;
-font-family:'Poppins',sans-serif;
+font-family: 'Poppins', sans-serif;
 }
 
 body{
-min-height:100vh;
-background:linear-gradient(135deg,#667eea,#764ba2,#6dd5ed);
-background-size:400% 400%;
-animation:gradientBG 12s ease infinite;
+height:100vh;
 display:flex;
 justify-content:center;
 align-items:center;
+background: linear-gradient(135deg,#667eea,#764ba2,#6dd5ed);
+background-size: 400% 400%;
+animation: gradientBG 12s ease infinite;
 }
 
 @keyframes gradientBG{
@@ -29,7 +29,7 @@ align-items:center;
 }
 
 .container{
-width:800px;
+width:900px;
 padding:30px;
 border-radius:20px;
 background:rgba(255,255,255,0.1);
@@ -38,58 +38,81 @@ box-shadow:0 8px 32px rgba(0,0,0,0.3);
 color:white;
 }
 
-h2{
-text-align:center;
+.header{
+display:flex;
+justify-content:space-between;
+align-items:center;
 margin-bottom:20px;
 }
 
-table{
+.header h2{
+font-size:26px;
+}
+
+.button-group a{
+padding:10px 15px;
+border-radius:20px;
+text-decoration:none;
+color:white;
+font-size:14px;
+margin-left:10px;
+}
+
+.btn-add{
+background:linear-gradient(45deg,#00c6ff,#0072ff);
+}
+
+.btn-logout{
+background:linear-gradient(45deg,#ff416c,#ff4b2b);
+}
+
+.table{
 width:100%;
 border-collapse:collapse;
 overflow:hidden;
 border-radius:10px;
 }
 
-table th, table td{
+.table th, .table td{
 padding:12px;
 text-align:center;
 }
 
-table th{
-background:rgba(255,255,255,0.2);
+.table thead{
+background:rgba(0,0,0,0.4);
 }
 
-table tr{
+.table tbody tr{
 background:rgba(255,255,255,0.1);
 transition:0.3s;
 }
 
-table tr:hover{
+.table tbody tr:hover{
 background:rgba(255,255,255,0.2);
 }
 
-table td{
-color:#fff;
-}
-
-.logout{
-margin-top:20px;
-text-align:center;
-}
-
-.logout a{
-padding:10px 20px;
-border-radius:30px;
-background:linear-gradient(45deg,#ff7eb3,#ff758c);
-color:white;
+.btn{
+padding:6px 10px;
+border-radius:10px;
 text-decoration:none;
-transition:0.3s;
-display:inline-block;
+color:white;
+font-size:12px;
 }
 
-.logout a:hover{
-transform:scale(1.05);
-box-shadow:0 0 15px rgba(255,255,255,0.5);
+.btn-edit{
+background:orange;
+}
+
+.btn-delete{
+background:red;
+}
+
+.alert{
+background: rgba(0,255,0,0.2);
+padding:10px;
+border-radius:10px;
+margin-bottom:15px;
+font-size:13px;
 }
 </style>
 
@@ -99,27 +122,58 @@ box-shadow:0 0 15px rgba(255,255,255,0.5);
 
 <div class="container">
 
-<h2>Daftar Pengguna</h2>
+    <div class="header">
+        <h2>Daftar Pengguna</h2>
+        <div class="button-group">
+            <a href="/tambah_pengguna" class="btn-add">+ Tambah</a>
+            <a href="/logout" class="btn-logout">Logout</a>
+        </div>
+    </div>
 
-<table>
-    <tr>
-        <th>ID</th>
-        <th>Email</th>
-        <th>Password</th>
-    </tr>
+    {{-- ALERT --}}
+    @if(session('success'))
+        <div class="alert">
+            {{ session('success') }}
+        </div>
+    @endif
 
-    @foreach($users as $user)
-    <tr>
-        <td>{{ $user->id }}</td>
-        <td>{{ $user->email }}</td>
-        <td>{{ $user->password }}</td>
-    </tr>
-    @endforeach
-</table>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Email</th>
+                <th>Password</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
 
-<div class="logout">
-    <a href="/logout">Logout</a>
-</div>
+        <tbody>
+            @foreach($users as $user)
+            <tr>
+                <td>{{ $loop->iteration }}</td>
+                <td>{{ $user->email }}</td>
+                <td>********</td>
+                <td>
+                    <a href="/edit/{{ $user->id }}" class="btn btn-edit">Edit</a>
+                    <a href="/delete/{{ $user->id }}" 
+                       class="btn btn-delete"
+                       onclick="return confirm('Yakin mau hapus?')">
+                       Hapus
+                    </a>9
+
+
+
+
+
+
+
+
+                    
+                </td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
 
 </div>
 
